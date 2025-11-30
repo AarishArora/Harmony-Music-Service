@@ -4,20 +4,13 @@ import config from "../config/config.js";
 
 export async function authArtistMiddleware(req, res, next) {
 
-    // Check for token in cookies or Authorization header
-    let token = req.cookies.token;
-    
-    if (!token) {
-        const authHeader = req.headers.authorization;
-        if (authHeader && authHeader.startsWith('Bearer ')) {
-            token = authHeader.slice(7); // Remove 'Bearer ' prefix
-        }
-    }
+    // Check for token in Authorization header
+    const authHeader = req.headers.authorization;
+    const token = authHeader?.split(" ")[1];
 
     if (!token) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
-
 
     try {
         const decoded = jwt.verify(token, config.JWT_SECRET);
@@ -35,15 +28,9 @@ export async function authArtistMiddleware(req, res, next) {
 
 export async function authUserMiddleware(req, res, next) {
 
-    // Check for token in cookies or Authorization header
-    let token = req.cookies.token;
-    
-    if (!token) {
-        const authHeader = req.headers.authorization;
-        if (authHeader && authHeader.startsWith('Bearer ')) {
-            token = authHeader.slice(7); // Remove 'Bearer ' prefix
-        }
-    }
+    // Check for token in Authorization header
+    const authHeader = req.headers.authorization;
+    const token = authHeader?.split(" ")[1];
 
     if (!token) {
         return res.status(401).json({ message: 'Unauthorized' });

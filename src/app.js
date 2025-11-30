@@ -1,6 +1,5 @@
 import express from "express";
 import musicRoutes from "./routes/music.routes.js";
-import cookieParser from "cookie-parser"
 import cors from "cors";
 import config from "./config/config.js";
 
@@ -11,7 +10,6 @@ app.use(cors({
     credentials: true,
 }));
 app.use(express.json());
-app.use(cookieParser());
 
 app.get('/health', (req, res) => {
     return res.status(200).json({ service: "Music", status: "healthy" });
